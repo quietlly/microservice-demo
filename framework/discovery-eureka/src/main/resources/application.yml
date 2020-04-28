@@ -1,0 +1,25 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: eureka
+
+info:
+  name: "@project.name@"
+  profile: ${spring.profiles.active}
+  version: "@project.version@"
+  description: "@project.description@"
+
+logging:
+  level:
+    root: INFO
+    
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  metrics:
+    tags:
+      application: ${spring.application.name}
+      instance: ${eureka.instance.instance-id}    

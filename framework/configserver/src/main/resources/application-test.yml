@@ -1,0 +1,26 @@
+server:
+  port: 80
+
+eureka:
+  instance:
+    instance-id: ${spring.cloud.client.ip-address}:${server.port} #eureka界面上显示的地址
+    preferIp-address: true  # eureka界面上显示的是否是IP
+    hostname: ${spring.cloud.client.ip-address}:${server.port} #eureka状态栏显示的地址
+  client:
+    service-url:
+      defaultZone: http://eureka/eureka/
+
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/quietlly/config.git
+          basedir: ../config-repo
+          username: admin
+          password: 111111
+          search-paths: config
+      label: master
+  kafka:
+    bootstrap-servers:
+      - ip:port

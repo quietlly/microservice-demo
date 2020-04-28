@@ -1,0 +1,5 @@
+eureka:
+  instance:
+    instance-id: ${spring.cloud.client.ip-address}:${server.port} #eureka界面上显示的地址
+    preferIp-address: true  # eureka界面上显示的是否是IP
+    hostname: ${spring.cloud.client.ip-address}:${server.port} #eureka状态栏显示的地址

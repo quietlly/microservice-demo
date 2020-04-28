@@ -1,0 +1,44 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: gateway-zuul
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    config:
+      name: ${spring.application.name},jwt,log
+      fail-fast: true
+      label: ${spring.profiles.active}
+      discovery:
+        enabled: true
+        service-id: configserver
+    bus:
+      refresh:
+        enabled: true
+      destination: configserver
+
+info:
+  name: ${spring.application.name}
+  profile: ${spring.profiles.active}
+  version: "@project.version@"
+  description: "@project.description@"
+zuul:
+  servlet-path:
+  routes:
+    app-web:
+      path: /api/app/**
+      serviceId: app-web-service
+    admin-web:
+      path: /api/web/**
+      serviceId: admin-web-service
+  ribbon-isolation-strategy: thread
+  thread-pool:
+    thread-pool-key-prefix: zuulgw
+    use-separate-thread-pools: true
+data-filter:
+  auth-path: #需要验证token的请求地址,可设置多个,会触发JwtAuthPreFilter
+    - /api/app/**
+    - /api/web/**
+  user-login-path: #登录请求地址,可设置多个,会触发LoginAddJwtPostFilter
+    - /api/login/**

@@ -1,0 +1,25 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: app-web-service
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    config:
+      name: ${spring.application.name},jwt,mysql,log
+      fail-fast: false
+      label: ${spring.profiles.active}
+      discovery:
+        enabled: true
+        service-id: configserver
+    bus:
+      refresh:
+        enabled: true
+      destination: configserver
+
+info:
+  name: ${spring.application.name}
+  profile: ${spring.profiles.active}
+  version: "@project.version@"
+  description: "@project.description@"      

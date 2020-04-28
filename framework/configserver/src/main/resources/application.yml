@@ -1,0 +1,33 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: configserver
+  cloud:
+    bus:
+      refresh:
+        enabled: true
+      destination: configserver
+  kafka:
+    consumer:
+      group-id: ${spring.application.name}
+
+info:
+  name: ${spring.application.name}
+  profile: ${spring.profiles.active}
+  version: "@project.version@"
+  description: "@project.description@"
+  
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  metrics:
+    tags:
+      application: ${spring.application.name}
+      instance: ${eureka.instance.instance-id}  
+      
+logging:
+  level:
+    root: INFO      

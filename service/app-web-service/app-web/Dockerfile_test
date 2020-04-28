@@ -1,0 +1,7 @@
+FROM 172.16.122.172:1998/common/openjdk:8u131-jre-alpine
+
+ARG JAR_FILE
+
+ADD target/${JAR_FILE} app.jar
+
+ENTRYPOINT ["java","-Xmx512m","-Dspring.profiles.active=test","-Dspring.cloud.inetutils.preferred-networks=10.0","-jar","/app.jar"]
